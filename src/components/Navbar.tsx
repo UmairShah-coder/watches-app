@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
         {/* Left: Logo */}
         <div className="flex mt-5 items-center gap-2">
           <img
-            src="public/ChatGPT Image Jan 16, 2026, 01_15_17 AM.png"
+            src="/logo.png"
             alt="Logo"
             className="w-12 transition-transform duration-300 hover:scale-110"
           />
