@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
   <div className="flex items-center gap-3">
     <img
       className="w-12"
-      src="/ChatGPT Image Jan 16, 2026, 01_15_17 AM.png"
+      src="/logo.png"
       alt="TimeSphere Logo"
     />
     <h2 className="">TimeSphere</h2>
