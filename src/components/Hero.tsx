@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
         {/* Right: Watch Image */}
         <div className="md:w-1/2 mt-8 md:mt-0 flex justify-center md:justify-end animate-[slideRight_1s_ease_forwards]">
           <img
-            src="public/ChatGPT Image Jan 16, 2026, 01_35_57 AM.png"
+            src="/banner.png"
             alt="Luxury Watch"
             className="w-80 md:w-[320px] object-contain hero-img"
           />
