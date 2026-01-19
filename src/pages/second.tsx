@@ -61,7 +61,7 @@ const Second: React.FC = () => {
           }`}
         >
           <img
-            src="public/watch-png-25017.png"
+            src="/watch-png-25031.png"
             alt="About TimeSphere"
             className="w-[400px] h-[400px] md:w-[500px] md:h-[500px] object-contain transition-transform duration-500 hover:scale-105"
           />
