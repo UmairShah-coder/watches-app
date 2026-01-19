@@ -15,7 +15,7 @@ const About: React.FC = () => {
         {/* Image */}
         <div className=" md:mt-0">
           <img
-            src="/abouts.png"
+            src="/watch-png-25017.png"
             alt="About TimeSphere"
             className="w-[400px] h-[400px] md:w-[500px] md:h-[500px] object-contain"
           />
