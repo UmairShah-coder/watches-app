@@ -65,9 +65,9 @@ const Card: React.FC<CardProps & { index: number }> = ({ title, price, descripti
 
 const CardPage: React.FC = () => {
   const cards = [
-    { title: "Rolex", price: "$129.99", description: "Elegant stylish watch for any occasion.", image: "public/watch-png-25035.png" },
-    { title: "Patek", price: "$149.99", description: "Premium watch crafted with precision.", image: "public/pngimg.com - watches_PNG101427.png" },
-    { title: "Philippe", price: "$179.99", description: "Sophisticated timepiece for collectors.", image: "public/pngimg.com - watches_PNG101441.png" },
+    { title: "Rolex", price: "$129.99", description: "Elegant stylish watch for any occasion.", image: "/cardd.png" },
+    { title: "Patek", price: "$149.99", description: "Premium watch crafted with precision.", image: "/carddd.png" },
+    { title: "Philippe", price: "$179.99", description: "Sophisticated timepiece for collectors.", image: "/cards.png" },
     { title: "Omega", price: "$199.99", description: "Modern design meets classic elegance.", image: "public/pngimg.com - watches_PNG101444.png" },
     { title: "Casio", price: "$219.99", description: "Timeless watch with premium materials.", image: "public/pngimg.com - watches_PNG9894.png" },
     { title: "Seiko", price: "$239.99", description: "Exclusive design for watch enthusiasts.", image: "public/pngimg.com - watches_PNG9855.png" },
