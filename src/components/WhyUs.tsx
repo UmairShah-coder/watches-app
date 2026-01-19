@@ -9,7 +9,7 @@ interface CardData {
 
 const cardsData: CardData[] = [
   { image: "/watch-18640.png", title: "Luxury Watches", description: "Durable, stylish, and perfect for sports and outdoor adventures.", date: "Jan 10, 2026" },
-  { image: "/watch-18661.png", title: "Sport Watches", description: "Durable, stylish, and perfect for sports and outdoor adventures.", date: "Feb 15, 2026" },
+  { image: "/service.png", title: "Sport Watches", description: "Durable, stylish, and perfect for sports and outdoor adventures.", date: "Feb 15, 2026" },
   { image: "/watch-18710.png", title: "Smart Watches", description: "Durable, stylish, and perfect for sports and outdoor adventures.", date: "Mar 20, 2026" },
   { image: "/watch-18687.png", title: "Vintage Collection", description: "Durable, stylish, and perfect for sports and outdoor adventures.", date: "Apr 25, 2026" },
 ];
