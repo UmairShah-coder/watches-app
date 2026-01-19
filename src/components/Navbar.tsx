@@ -3,6 +3,7 @@ import { FaUser, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -35,19 +36,35 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const swalConfig = (title: string, text: string, icon: any) => ({
+    title,
+    text,
+    icon,
+    background: "#000", // dark background
+    color: "#f1f5f9",      // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    confirmButtonText: "OK",
+  });
+
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: "#14b8a6", // teal confirm
+      cancelButtonColor: "#ef4444", // red cancel
+      background: "#000", // dark
+      color: "#f1f5f9", // white
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("loggedInUser");
         setUser(null);
         setShowDropdown(false);
-        Swal.fire("Logged Out!", "You have been logged out.", "success").then(() => {
+        Swal.fire(
+          swalConfig("Logged Out!", "You have been logged out.", "success")
+        ).then(() => {
           navigate("/"); // redirect home
         });
       }
@@ -80,14 +97,16 @@ const Navbar: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
         {/* Left: Logo */}
-        <div className="flex mt-5 items-center gap-2">
-          <img
-            src="/logo.png"
-            alt="Logo"
-            className="w-12 transition-transform duration-300 hover:scale-110"
-          />
-          <p className="text-white font-semibold tracking-wide">TimeSphere</p>
-        </div>
+        <Link to="/">
+          <div className="flex mt-5 items-center gap-2">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="w-12 transition-transform duration-300 hover:scale-110"
+            />
+            <p className="text-white font-semibold tracking-wide">TimeSphere</p>
+          </div>
+        </Link>
 
         {/* Center: Search Bar */}
         <div className="flex-1 mt-5 mr-24 mx-10 relative max-w-lg">
@@ -96,7 +115,7 @@ const Navbar: React.FC = () => {
             placeholder="Search..."
             className="w-full h-10 pl-10 pr-4 bg-black rounded-full border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all duration-300 text-white"
           />
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <FiSearch className="absolute left-3 cursor-pointer top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
 
         {/* Right: Icons */}
@@ -126,31 +145,24 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Links */}
-      <div className="bg-black mt-5  w-full">
+      <div className="bg-black mt-5 w-full">
         <nav className="flex justify-center space-x-10 py-3 font-semibold uppercase text-white tracking-wide">
           <NavLink to="/" className="nav-link hover:text-teal-400 transition-colors">Home</NavLink>
           <NavLink to="/about" className="nav-link hover:text-teal-400 transition-colors">About</NavLink>
           <NavLink to="/card" className="nav-link hover:text-teal-400 transition-colors">Card</NavLink>
           <NavLink to="/contact" className="nav-link hover:text-teal-400 transition-colors">Contact</NavLink>
-      <NavLink
-  to={
-    user?.isAdmin
-      ? "/dashboard"
-      : "/dashboard-login"
-  }
-  className="nav-link hover:text-teal-400 transition-colors"
-  onClick={(e) => {
-    if (user && !user.isAdmin) {
-      e.preventDefault();
-      navigate("/dashboard-login");
-    }
-  }}
->
-  Dashboard
-</NavLink>
-
-
-
+          <NavLink
+            to={user?.isAdmin ? "/dashboard" : "/dashboard-login"}
+            className="nav-link hover:text-teal-400 transition-colors"
+            onClick={(e) => {
+              if (user && !user.isAdmin) {
+                e.preventDefault();
+                navigate("/dashboard-login");
+              }
+            }}
+          >
+            Dashboard
+          </NavLink>
         </nav>
       </div>
     </header>

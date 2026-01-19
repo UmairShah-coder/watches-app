@@ -9,11 +9,21 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const swalConfig = (title: string, text: string, icon: any) => ({
+    title,
+    text,
+    icon,
+    background: "transparent",          // black background
+    color: "#fff",            // teal text
+    confirmButtonColor: "#14B8A6", // teal button
+    confirmButtonText: "OK",
+  });
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!fullName || !email || !password) {
-      Swal.fire("Oops!", "Please fill all fields", "warning");
+      await Swal.fire(swalConfig("Oops!", "Please fill all fields", "warning"));
       return;
     }
 
@@ -24,9 +34,11 @@ const Register: React.FC = () => {
     const duplicate = users.find((u: { email: string }) => u.email === email);
     if (duplicate) {
       await Swal.fire(
-        "Oops!",
-        "An account with this email already exists. Please login.",
-        "error"
+        swalConfig(
+          "Oops!",
+          "An account with this email already exists. Please login.",
+          "error"
+        )
       );
       navigate("/login");
       return;
@@ -38,9 +50,11 @@ const Register: React.FC = () => {
     localStorage.setItem("users", JSON.stringify(users));
 
     await Swal.fire(
-      "Success!",
-      "Account created successfully! Please login.",
-      "success"
+      swalConfig(
+        "Success!",
+        "Account created successfully! Please login.",
+        "success"
+      )
     );
 
     navigate("/login");
@@ -48,18 +62,17 @@ const Register: React.FC = () => {
 
   return (
     <div className="bg-black min-h-screen flex items-center justify-center px-6">
-         <style>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         * { font-family: 'Poppins', sans-serif; }
-
-     
       `}</style>
+
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         {/* LEFT BRANDING */}
         <div className="flex flex-col items-start justify-center">
           <img
-            src="/ChatGPT Image Jan 16, 2026, 01_15_17 AM.png"
+            src="/logo.png"
             className="w-24 mb-4"
             alt="TimeSphere Logo"
           />

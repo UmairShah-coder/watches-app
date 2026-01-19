@@ -15,7 +15,7 @@ const cardsData: CardData[] = [
 ];
 
 const CreateCard: React.FC<{ card: CardData }> = ({ card }) => (
-  <div className="p-4 rounded-lg mx-4 shadow-lg hover:shadow-2xl transition-all duration-300 w-72 shrink-0 bg-black border text-white">
+  <div className="p-4 rounded-lg mx-4 shadow-lg hover:shadow-2xl hover:border-teal-500 transition-all duration-300 w-72 shrink-0 bg-black border text-white">
     <div className="aspect-[3/2] rounded-lg overflow-hidden">
       <img src={card.image} alt={card.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
     </div>

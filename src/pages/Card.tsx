@@ -40,7 +40,7 @@ const Card: React.FC<CardProps & { index: number }> = ({ title, price, descripti
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-cover rounded-lg transition-transform duration-300 hover:scale-105"
         />
       </div>
 

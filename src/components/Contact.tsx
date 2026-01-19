@@ -41,6 +41,11 @@ const Contact: React.FC = () => {
         icon: "error",
         title: "Oops!",
         text: "Please fill all fields ⚠️",
+        
+    background: "#000", // dark background
+    color: "#f1f5f9",      // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    confirmButtonText: "OK",
       });
       return;
     }
@@ -54,8 +59,12 @@ const Contact: React.FC = () => {
       icon: "success",
       title: "Message Sent!",
       text: "Your contact info has been saved ✅",
-      timer: 2000,
       showConfirmButton: false,
+      
+    background: "#000", // dark background
+    color: "#f1f5f9",      // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    confirmButtonText: "OK",
     });
 
     setContact({ name: "", email: "", phone: "", city: "", message: "" });

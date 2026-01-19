@@ -89,7 +89,7 @@ const Services: React.FC = () => {
           <div
             key={index}
             style={{ animationDelay: `${index * 0.2}s` }}
-            className={`bg-black shadow-sm border border-gray-200 p-2 w-full max-w-sm rounded-lg overflow-hidden mx-auto mt-4 ${
+            className={`bg-black  shadow-sm hover:border-teal-500 border border-gray-200 p-2 w-full max-w-sm rounded-lg overflow-hidden mx-auto mt-4 ${
               visible ? "fadeUp" : "opacity-0"
             }`}
           >
@@ -98,7 +98,7 @@ const Services: React.FC = () => {
               <img
                 src={service.image}
                 alt={service.title}
-                className="w-full h-[300px] object-cover transition-transform duration-500 hover:scale-110"
+                className="w-full h-[300px]  object-cover transition-transform duration-500 hover:scale-110"
               />
             </div>
 

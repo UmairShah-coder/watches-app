@@ -4,7 +4,8 @@ import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import DashboardCharts from "../components/DashboardChart";
-
+import { FaTrash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa"; 
 const Dashboard: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [activePage, setActivePage] = useState("Home");
@@ -39,56 +40,75 @@ const Dashboard: React.FC = () => {
     setTimeout(() => setLoading(false), 800);
   }, [navigate]);
 
-  const handleLogout = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will be logged out",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, logout!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem("loggedInAdmin");
-        Swal.fire("Logged Out!", "You have been logged out.", "success").then(() => {
-          navigate("/");
-        });
-      }
-    });
-  };
+ const handleLogout = () => {
+  // Direct logout without confirmation
+  localStorage.removeItem("loggedInAdmin");
 
-  const handleDeleteUser = (index: number, type: "users" | "contacts") => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This entry will be permanently deleted!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#e3342f",
-      cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (type === "users") {
-          const updated = [...allUsers];
-          updated.splice(index, 1);
-          setAllUsers(updated);
-          localStorage.setItem("users", JSON.stringify(updated));
-        } else {
-          const updated = [...contacts];
-          updated.splice(index, 1);
-          setContacts(updated);
-          localStorage.setItem("contacts", JSON.stringify(updated));
-        }
-        Swal.fire("Deleted!", "Entry has been deleted.", "success");
+  // Show dark-themed success alert
+  Swal.fire({
+    title: "Logged Out!",
+    text: "You have been logged out.",
+    icon: "success",
+    background: "#000",        // dark background
+    color: "#f1f5f9",          // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    confirmButtonText: "OK",
+  }).then(() => {
+    navigate("/"); // redirect home after clicking OK
+  });
+};
+
+
+ const handleDeleteUser = (index: number, type: "users" | "contacts") => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This entry will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    background: "#000",        // dark background
+    color: "#f1f5f9",          // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    cancelButtonColor: "#c63232ff",
+    confirmButtonText: "OK",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if (type === "users") {
+        const updated = [...allUsers];
+        updated.splice(index, 1);
+        setAllUsers(updated);
+        localStorage.setItem("users", JSON.stringify(updated));
+      } else {
+        const updated = [...contacts];
+        updated.splice(index, 1);
+        setContacts(updated);
+        localStorage.setItem("contacts", JSON.stringify(updated));
       }
-    });
-  };
+
+      // Dark-themed delete success alert
+      Swal.fire({
+        title: "Deleted!",
+        text: "Entry has been deleted.",
+        icon: "success",
+        background: "#000",        // dark background
+        color: "#f1f5f9",          // white text
+        confirmButtonColor: "#14B8A6", // teal button
+        confirmButtonText: "OK",
+      });
+    }
+  });
+};
+
 
   const showFullMessage = (message: string) => {
     Swal.fire({
       title: "Full Message",
       text: message,
-      icon: "info",
+      icon: "question",
       confirmButtonText: "Close",
+        background: "#000", // dark background
+    color: "#f1f5f9",      // white text
+    confirmButtonColor: "#14B8A6", // teal button
+    
     });
   };
 
@@ -139,132 +159,146 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8 overflow-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold text-teal-400">Welcome, {user?.fullName}!</h2>
-          <div className="space-x-4">
-            <button
-              onClick={() => navigate("/")}
-              className="flex items-center gap-2 px-4 py-2 rounded text-red-400 hover:text-red-500 transition"
-            >
-              <FaArrowLeft /> Back to Home
-            </button>
-          </div>
+     <div className="flex-1 p-8 overflow-auto">
+
+  {activePage === "Home" && (
+    <div className="flex justify-between items-center mb-6">
+      <h2 className="text-3xl font-bold text-teal-400">Welcome, {user?.fullName}!</h2>
+      <div className="space-x-4">
+        <button
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 px-4 py-2 rounded text-red-400 hover:text-red-500 transition"
+        >
+          <FaArrowLeft /> Back to Home
+        </button>
+      </div>
+    </div>
+  )}
+
+  {/* Home Page */}
+  {activePage === "Home" && (
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-gradient-to-r from-teal-500 to-teal-700 p-6 rounded-xl shadow-lg">
+          <h4 className="text-white/80">Total Users</h4>
+          <p className="text-3xl font-bold text-white">{allUsers.length}</p>
         </div>
 
-        {/* Home Page */}
-        {activePage === "Home" && (
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-r from-teal-500 to-teal-700 p-6 rounded-xl shadow-lg">
-                <h4 className="text-white/80">Total Users</h4>
-                <p className="text-3xl font-bold text-white">{allUsers.length}</p>
-              </div>
+        <div className="bg-gradient-to-r from-purple-500 to-purple-700 p-6 rounded-xl shadow-lg">
+          <h4 className="text-white/80">Admin</h4>
+          <p className="text-3xl font-bold text-white">1</p>
+        </div>
 
-              <div className="bg-gradient-to-r from-purple-500 to-purple-700 p-6 rounded-xl shadow-lg">
-                <h4 className="text-white/80">Admin</h4>
-                <p className="text-3xl font-bold text-white">1</p>
-              </div>
+        <div className="bg-gradient-to-r from-green-500 to-green-700 p-6 rounded-xl shadow-lg">
+          <h4 className="text-white/80">System</h4>
+          <p className="text-3xl font-bold text-white">Online</p>
+        </div>
+      </div>
 
-              <div className="bg-gradient-to-r from-green-500 to-green-700 p-6 rounded-xl shadow-lg">
-                <h4 className="text-white/80">System</h4>
-                <p className="text-3xl font-bold text-white">Online</p>
-              </div>
-            </div>
-
-            <DashboardCharts totalUsers={allUsers.length} />
-          </div>
-        )}
-
+      <DashboardCharts totalUsers={allUsers.length} />
+    </div>
+  )}
         {/* Users Page */}
         {activePage === "Users" && (
           <div className="overflow-auto mt-4">
-            <table className="min-w-full border border-gray-700">
-              <thead className="bg-gray-800 text-teal-400">
-                <tr>
-                  <th className="py-2 px-4">Full Name</th>
-                  <th className="py-2 px-4">Email</th>
-                  <th className="py-2 px-4">Password</th>
-                  <th className="py-2 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allUsers.map((u, idx) => (
-                  <tr key={idx} className="text-center even:bg-gray-900 odd:bg-gray-800">
-                    <td className="py-2 px-4">{u.fullName}</td>
-                    <td className="py-2 px-4">{u.email}</td>
-                    <td className="py-2 px-4">{u.password}</td>
-                    <td className="py-2 px-4">
-                      <button
-                        onClick={() => handleDeleteUser(idx, "users")}
-                        className="bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <h2 className="text-3xl font-bold text-teal-400 mb-10 ">Users</h2>
+ <table className="min-w-full border-collapse border border-gray-700">
+  <thead className="bg-gray-800 text-teal-400">
+    <tr>
+      <th className="py-2 px-4 border border-gray-700">Full Name</th>
+      <th className="py-2 px-4 border border-gray-700">Email</th>
+      <th className="py-2 px-4 border border-gray-700">Password</th>
+      <th className="py-2 px-4 border border-gray-700">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {allUsers.length === 0 ? (
+      <tr>
+        <td colSpan={4} className="py-4 text-center text-red-500 border border-gray-700">
+          No users found!
+        </td>
+      </tr>
+    ) : (
+      allUsers.map((u, idx) => (
+        <tr key={idx} className="text-center even:bg-gray-900 odd:bg-gray-800">
+          <td className="py-2 px-4 border border-gray-700">{u.fullName}</td>
+          <td className="py-2 px-4 border border-gray-700">{u.email}</td>
+          <td className="py-2 px-4 border border-gray-700">{u.password}</td>
+          <td className="py-2 px-4 border border-gray-700">
+            <div className="flex justify-center">
+              <button
+                onClick={() => handleDeleteUser(idx, "users")}
+                className="flex items-center justify-center w-10 h-10 rounded transition"
+              >
+                <FaTrash className="text-red-500 hover:text-red-700 transition text-lg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))
+    )}
+  </tbody>
+</table>
+
           </div>
         )}
 
         {/* Contacts Page */}
         {activePage === "Contacts" && (
           <div className="overflow-auto mt-4">
-            <h3 className="text-xl font-bold mb-4 text-teal-400">Saved Contacts</h3>
-            <table className="min-w-full border border-gray-700">
-              <thead className="bg-gray-800 text-teal-400">
-                <tr>
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Email</th>
-                  <th className="py-2 px-4">City</th>
-                  <th className="py-2 px-4">Message</th>
-                  <th className="py-2 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contacts.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="py-4 text-center text-red-400">
-                      No contact data found!
-                    </td>
-                  </tr>
-                ) : (
-                  contacts.map((c, idx) => {
-                    const messageWords = c.message.split(" ");
-                    const preview = messageWords.slice(0, 4).join(" ");
+            <h3 className="text-3xl font-bold text-teal-400 mb-10 "> Contacts</h3>
+        <table className="min-w-full border-collapse border border-gray-700">
+  <thead className="bg-gray-800 text-teal-400">
+    <tr>
+      <th className="py-2 px-4 border border-gray-700">Name</th>
+      <th className="py-2 px-4 border border-gray-700">Email</th>
+      <th className="py-2 px-4 border border-gray-700">City</th>
+      <th className="py-2 px-4 border border-gray-700">Message</th>
+      <th className="py-2 px-4 border border-gray-700">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {contacts.length === 0 ? (
+      <tr>
+        <td colSpan={5} className="py-4 text-center text-red-400 border border-gray-700">
+          No contact data found!
+        </td>
+      </tr>
+    ) : (
+      contacts.map((c, idx) => {
+        const preview = c.message.split(" ").slice(0, 4).join(" ");
 
-                    return (
-                      <tr key={idx} className="text-center even:bg-gray-900 odd:bg-gray-800">
-                        <td className="py-2 px-4">{c.name}</td>
-                        <td className="py-2 px-4">{c.email}</td>
-                        <td className="py-2 px-4">{c.city || "-"}</td>
-                        <td className="py-2 px-4">
-                          {preview + (messageWords.length > 4 ? "..." : "")}
-                          {messageWords.length > 4 && (
-                            <button
-                              onClick={() => showFullMessage(c.message)}
-                              className="ml-2 text-teal-400 hover:underline text-sm"
-                            >
-                              Read more
-                            </button>
-                          )}
-                        </td>
-                        <td className="py-2 px-4">
-                          <button
-                            onClick={() => handleDeleteUser(idx, "contacts")}
-                            className="bg-red-500 px-4 py-1 rounded hover:bg-red-600 transition"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+        return (
+          <tr key={idx} className="text-center even:bg-gray-900 odd:bg-gray-800">
+            <td className="py-2 px-4 border border-gray-700">{c.name}</td>
+            <td className="py-2 px-4 border border-gray-700">{c.email}</td>
+            <td className="py-2 px-4 border border-gray-700">{c.city || "-"}</td>
+            <td className="py-2 px-4 border border-gray-700">{preview + (c.message.split(" ").length > 4 ? "..." : "")}</td>
+            <td className="py-2 px-4 border border-gray-700 flex items-center justify-center gap-2">
+              {/* Eye icon */}
+              <button
+                onClick={() => showFullMessage(c.message)}
+                className="flex items-center justify-center w-10 h-10 rounded "
+              >
+                <FaEye className="text-teal-500 hover:text-teal-600 transition text-lg" />
+              </button>
+
+              {/* Trash icon */}
+              <button
+                onClick={() => handleDeleteUser(idx, "contacts")}
+                className="flex items-center justify-center w-10 h-10 rounded "
+              >
+                <FaTrash className="text-red-500 hover:text-red-600 transition text-lg" />
+              </button>
+            </td>
+          </tr>
+        );
+      })
+    )}
+  </tbody>
+</table>
+
+
           </div>
         )}
 
@@ -284,23 +318,36 @@ const Dashboard: React.FC = () => {
                     return;
                   }
 
-                  Swal.fire({
-                    title: "Are you sure?",
-                    text: "This will clear all users and contacts!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#e3342f",
-                    cancelButtonColor: "#6b7280",
-                    confirmButtonText: "Yes, reset!",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      localStorage.removeItem("users");
-                      localStorage.removeItem("contacts");
-                      setAllUsers([]);
-                      setContacts([]);
-                      Swal.fire("Reset!", "All user and contact data cleared.", "success");
-                    }
-                  });
+              Swal.fire({
+  title: "Are you sure?",
+  text: "This will clear all users and contacts!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, reset!",
+  confirmButtonColor: "#14B8A6", // teal button
+  cancelButtonColor: "#c63232ff", // red cancel
+  background: "#000",              // dark background
+  color: "#f1f5f9",               // white text
+}).then((result) => {
+  if (result.isConfirmed) {
+    localStorage.removeItem("users");
+    localStorage.removeItem("contacts");
+    setAllUsers([]);
+    setContacts([]);
+
+    // Success alert dark theme
+    Swal.fire({
+      title: "Reset!",
+      text: "All user and contact data cleared.",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#14B8A6",
+      background: "#000",
+      color: "#f1f5f9",
+    });
+  }
+});
+
                 }}
                 className="mt-2 px-4 py-2 bg-red-500 rounded hover:bg-red-600 transition"
               >

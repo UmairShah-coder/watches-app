@@ -7,6 +7,17 @@ const DashboardLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Dark theme SweetAlert config
+  const swalConfig = (title: string, text: string, icon: any, confirmText = "OK", confirmColor = "#14B8A6") => ({
+    title,
+    text,
+    icon,
+    background: "#262628ff",        // dark background
+    color: "#f1f5f9",             // white text
+    confirmButtonColor: confirmColor,
+    confirmButtonText: confirmText,
+  });
+
   // If already logged in as admin → go to dashboard
   useEffect(() => {
     const loggedAdmin = localStorage.getItem("loggedInAdmin");
@@ -19,7 +30,7 @@ const DashboardLogin: React.FC = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      Swal.fire("Oops!", "Fill all fields", "warning");
+      Swal.fire(swalConfig("Oops!", "Fill all fields", "warning"));
       return;
     }
 
@@ -34,10 +45,10 @@ const DashboardLogin: React.FC = () => {
       // Use separate key for admin
       localStorage.setItem("loggedInAdmin", JSON.stringify(adminData));
 
-      await Swal.fire("Welcome Admin!", "Dashboard unlocked", "success");
+      await Swal.fire(swalConfig("Welcome Admin!", "Dashboard unlocked", "success"));
       navigate("/dashboard");
     } else {
-      Swal.fire("Access Denied", "Only admin can login here", "error");
+      Swal.fire(swalConfig("Access Denied", "Only admin can login here", "error"));
     }
   };
 
